@@ -2,6 +2,7 @@ from setuptools import setup
 
 setup(
     name='pycrowd',
+    package ['pycrowd']
     version='0.1',
     description='Python wrapper for the Bugcrowd API',
     url='https://github.com/leifdreizler/pycrowd',
@@ -13,5 +14,7 @@ setup(
         'requests',
         'pytest'
     ],
+    download_url = 'https://github.com/leifdreizler/pycrowd/archive/0.1.tar.gz',
+    keywords = ['bugcrowd'],
     zip_safe=False
 )
