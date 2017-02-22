@@ -1,5 +1,3 @@
-from .pycrowd import Client
-from .pycrowd import Bounty
-from .pycrowd import Submission
+from .bugcrowd import Bugcrowd
 
 __version__ = '0.1'
