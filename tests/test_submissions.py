@@ -74,6 +74,6 @@ class TestSubmissions(object):
         pw = os.environ.get('BCPW')
 
         test = pycrowd.Client(uname, pw)
-        r = test.update_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab", "New Title 1", "xss")
+        r = test.update_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab", "New Title 1", "xss", {'customKey': 'updatedKey'})
 
         assert r.status_code == 200

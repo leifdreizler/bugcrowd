@@ -31,12 +31,14 @@ class Client(object):
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
         return r
 
-    def update_submission(self, submission_uuid, title=None, internal_bug_type=None):
+    def update_submission(self, submission_uuid, title=None, internal_bug_type=None, customFields=None):
         payload = {}
         if title is not None:
             payload['title'] = title
         if internal_bug_type is not None:
             payload['internal_bug_type'] = internal_bug_type
+        if customFields is not None:
+            payload['custom_fields'] = customFields
 
         r = self.put('submissions/' + submission_uuid, json=payload)
 
