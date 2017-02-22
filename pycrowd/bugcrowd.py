@@ -9,10 +9,6 @@ class Client(object):
 
     def list_bounties(self):
         r = self.get('bounties')
-
-        if r.status_code is not 200:
-            raise ApiException(r.text)
-
         j = json.loads(r.text)
 
         bounties = []
@@ -23,20 +19,12 @@ class Client(object):
 
     def get_bounty(self, bounty_id):
         r = self.get('bounties/' + bounty_id)
-
-        if r.status_code is not 200:
-            raise ApiException(r.text)
-
         j = json.loads(r.text)
 
         return Bounty(j['bounty'])
 
     def get_submission(self, submission_id):
         r = self.get('submissions/' + submission_id)
-
-        if r.status_code is not 200:
-            raise ApiException(r.text)
-
         j = json.loads(r.text)
 
         return Submission(j['submission'])
@@ -53,10 +41,6 @@ class Client(object):
             payload['sort'] = sort
 
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
-
-        if r.status_code is not 200:
-            raise ApiException(r.text)
-
         j = json.loads(r.text)
         
         submissions = []
@@ -76,10 +60,7 @@ class Client(object):
         if custom_fields is not None:
             payload['custom_fields'] = custom_fields
 
-        r = self.put('submissions/' + submission_uuid, json=payload)
-
-        if r.status_code is not 200:
-            raise ApiException(r.text)
+        self.put('submissions/' + submission_uuid, json=payload)
 
         return self.get_submission(submission_uuid)
 
@@ -87,11 +68,11 @@ class Client(object):
         current_priority = self.get_submission(submission_uuid).priority
         
         if current_priority == None: # Set
-            r = self.post('submissions/' + submission_uuid + '/priority', json={'priority': {'level': level}})
+            self.post('submissions/' + submission_uuid + '/priority', json={'priority': {'level': level}})
         elif current_priority: # Update
-            r = self.put('submissions/' + submission_uuid + '/priority', json={'priority': {'level': level}})
+            self.put('submissions/' + submission_uuid + '/priority', json={'priority': {'level': level}})
         elif level == None: # Delete
-            r = self.delete('submissions/' + submission_uuid + '/priority')
+            self.delete('submissions/' + submission_uuid + '/priority')
 
         return level
 
@@ -125,20 +106,39 @@ class Client(object):
     # Utility Methods
 
     def delete(self, path):
-        return requests.delete('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
+        r = requests.delete('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
                                headers=self.version_header)
 
+        if r.status_code is not 200:
+            raise ApiException(r.text)
+
+        return r
+
     def put(self, path, json=None):
-        return requests.put('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
+        r = requests.put('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
                             headers=self.version_header, json=json)
 
+        if r.status_code is not 200:
+            raise ApiException(r.text)
+
+        return r
+
     def post(self, path, json=None):
-        return requests.post('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
+        r = requests.post('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
                              headers=self.version_header, json=json)
+        if r.status_code is not 201:
+            raise ApiException(r.text)
+
+        return r
 
     def get(self, path, params=None):
-        return requests.get('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
+        r = requests.get('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
                             headers=self.version_header, params=params)
+
+        if r.status_code is not 200:
+            raise ApiException(r.text)
+
+        return r
 
 
 class Bounty(object):

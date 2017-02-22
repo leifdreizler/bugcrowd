@@ -32,7 +32,7 @@ class TestSubmissions(object):
         assert r[0].bounty['uuid'] == "84b71b04-a363-441f-91e0-8519ad3a4f4f"
 
 
-    def test_update_submission(self):
+    def test_update_submission_priority(self):
         uname = os.environ.get('BCUSER')
         pw = os.environ.get('BCPW')
         test = pycrowd.Client(uname, pw)
@@ -45,6 +45,16 @@ class TestSubmissions(object):
         assert test.get_submission("b337bee1-1643-4ef8-af33-fde80cb4d987").priority == 2
         test.update_priority_on_submission("b337bee1-1643-4ef8-af33-fde80cb4d987", None)
         assert test.get_submission("b337bee1-1643-4ef8-af33-fde80cb4d987").priority == None
+
+    def test_update_submission_priority_fails(self):
+        with pytest.raises(pycrowd.ApiException):
+            uname = "noOne"
+            pw = "badPass"
+            test = pycrowd.Client(uname, pw)
+
+            test.get_submission("b337bee1-1643-4ef8-af33-fde80cb4d987")
+
+    # TODO: Write stateful test for update submission priority server errors
 
     def test_get_submission_for_bounty_with_assignment(self):
 
