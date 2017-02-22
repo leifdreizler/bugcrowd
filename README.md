@@ -13,4 +13,4 @@ This was our first Python module, so beware! 👻
 
 ## Examples
 
-We have included a few examples in the `examples` folder, and plan to add more in the future. In the meantime you should visit the tests folder.
+We have included a few examples in the `examples` folder, and plan to add more in the future. In the meantime you should visit the tests folder and review the test cases for usage.
