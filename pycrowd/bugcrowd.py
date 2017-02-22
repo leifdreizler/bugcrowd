@@ -7,28 +7,46 @@ class Client(object):
         self.version_header = {"Accept": "application/vnd.bugcrowd.v2+json"}
 
     def list_bounties(self):
-        r = requests.get('https://api.bugcrowd.com/bounties', auth=(self.uname, self.pw), headers=self.version_header)
+        r = self.get('bounties')
+
         return r
 
     def get_bounty(self, bounty_id):
-        r = requests.get('https://api.bugcrowd.com/bounties/' + bounty_id, auth=(self.uname, self.pw),
-                         headers=self.version_header)
+        r = self.get('bounties/' + bounty_id)
+
         return r
 
-    def get_submissions_for_bounty(self, bounty_uuid, assignment='', filter='', search='', sort=''):
+    def get_submissions_for_bounty(self, bounty_uuid, assignment=None, filter=None, search=None, sort=None):
         payload = {}
-        if assignment != '':
+        if assignment is not None:
             payload['assignment'] = assignment
-        if filter != '':
+        if filter is not None:
             payload['filter'] = filter
-        if search != '':
+        if search is not None:
             payload['search'] = search
-        if sort != '':
+        if sort is not None:
             payload['sort'] = sort
 
-        r = requests.get('https://api.bugcrowd.com/bounties/' + bounty_uuid + '/submissions', auth=(self.uname, self.pw),
-                         headers=self.version_header, params=payload)
+        r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
         return r
+
+    def create_submission(self, bounty_uuid, title=None, submitted_at=None):
+        payload = {}
+        if title is not None:
+            payload['title'] = title
+        if submitted_at is not None:
+            payload['submitted_at'] = submitted_at
+
+        r = self.post('bounties/' +  bounty_uuid + "/submissions", json=payload)
+        return r
+
+    def post(self, path, json=None):
+        return requests.post('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
+                            headers=self.version_header, json=json)
+
+    def get(self, path, params=None):
+        return requests.get('https://api.bugcrowd.com/' + path , auth=(self.uname, self.pw),
+                         headers=self.version_header, params=params)
 
 class Bounty(object):
     def __init__(self):
