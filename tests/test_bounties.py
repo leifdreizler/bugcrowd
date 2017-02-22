@@ -21,7 +21,7 @@ class TestBounties(object):
 
         assert r.status_code == 401
 
-    def test_single_bounty(self):
+    def test_single_bounty_passes(self):
         uname = os.environ.get('BCUSER')
         pw = os.environ.get('BCPW')
 
