@@ -28,7 +28,7 @@ class TestBounties(object):
         test = pycrowd.Bugcrowd(uname, pw)
         r = test.get_bounty("84b71b04-a363-441f-91e0-8519ad3a4f4f")
 
-        print r.text
+        print(r.text)
         assert r.status_code == 200
 
     def test_single_bounty_fails(self):
