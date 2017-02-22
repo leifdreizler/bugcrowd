@@ -67,6 +67,23 @@ class Client(object):
         r = self.get('bounties/' + bounty_uuid + '/custom_field_labels')
         return r
 
+    def create_custom_field_for_bounty(self, bounty_uuid, field_name):
+        r = self.post('bounties/' + bounty_uuid + '/custom_field_labels', json={'field_name': field_name})
+
+        return r
+
+    def update_custom_field_label_for_bounty(self, bounty_uuid, field_id, new_label):
+        r = self.put('bounties/' + bounty_uuid + '/custom_field_labels/' + field_id, json={'field_name': new_label})
+
+        return r
+
+    def delete_custom_field_for_bounty(self, bounty_uuid, field_id):
+        r = self.delete('bounties/' + bounty_uuid + '/custom_field_labels/' + field_id)
+
+        return r
+
+    # Utility Methods
+
     def delete(self, path):
         return requests.delete('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
                                headers=self.version_header)
