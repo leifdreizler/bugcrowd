@@ -32,6 +32,19 @@ class Client(object):
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
         return r
 
+    def update_submission(self, submission_uuid, title=None, internal_bug_type=None, customFields=None):
+        payload = {}
+        if title is not None:
+            payload['title'] = title
+        if internal_bug_type is not None:
+            payload['internal_bug_type'] = internal_bug_type
+        if customFields is not None:
+            payload['custom_fields'] = customFields
+
+        r = self.put('submissions/' + submission_uuid, json=payload)
+
+        return r
+
     def set_priority_on_submission(self, submission_uuid, level):
         r = self.post('submissions/' + submission_uuid + '/priority', json={'priority': {'level': level}})
 
@@ -54,6 +67,23 @@ class Client(object):
     def get_custom_fields_for_bounty(self, bounty_uuid):
         r = self.get('bounties/' + bounty_uuid + '/custom_field_labels')
         return r
+
+    def create_custom_field_for_bounty(self, bounty_uuid, field_name):
+        r = self.post('bounties/' + bounty_uuid + '/custom_field_labels', json={'field_name': field_name})
+
+        return r
+
+    def update_custom_field_label_for_bounty(self, bounty_uuid, field_id, new_label):
+        r = self.put('bounties/' + bounty_uuid + '/custom_field_labels/' + field_id, json={'field_name': new_label})
+
+        return r
+
+    def delete_custom_field_for_bounty(self, bounty_uuid, field_id):
+        r = self.delete('bounties/' + bounty_uuid + '/custom_field_labels/' + field_id)
+
+        return r
+
+    # Utility Methods
 
     def delete(self, path):
         return requests.delete('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
