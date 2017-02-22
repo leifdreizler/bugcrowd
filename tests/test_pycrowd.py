@@ -1,5 +1,5 @@
-import pycrowd
+import bugcrowd
 
-class TestPycrowd(object):
+class TestBugcrowd(object):
     def test_works(self):
-        assert 'pycrowd' in globals()
+        assert 'bugcrowd' in globals()

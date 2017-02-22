@@ -1,9 +1,9 @@
 import os
-import pycrowd
+import bugcrowd
 
 uname = os.environ.get('BCUSER')
 pw = os.environ.get('BCPW')
-test = pycrowd.Client(uname, pw)
+test = bugcrowd.Client(uname, pw)
 
 # Get a list of all bounties
 b = test.list_bounties()

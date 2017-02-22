@@ -1,7 +1,7 @@
 import os
 
 import pytest
-import pycrowd
+import bugcrowd
 
 
 class TestSubmissions(object):
@@ -9,24 +9,24 @@ class TestSubmissions(object):
         uname = os.environ.get('BCUSER')
         pw = os.environ.get('BCPW')
 
-        test = pycrowd.Client(uname, pw)
+        test = bugcrowd.Client(uname, pw)
         s = test.get_submission("b337bee1-1643-4ef8-af33-fde80cb4d987")
 
         assert s.uuid == "b337bee1-1643-4ef8-af33-fde80cb4d987"
 
     def test_get_submission_fails(self):
-        with pytest.raises(pycrowd.ApiException):
+        with pytest.raises(bugcrowd.ApiException):
             uname = "noOne"
             pw = "badPass"
 
-            test = pycrowd.Client(uname, pw)
+            test = bugcrowd.Client(uname, pw)
             test.get_submission("b337bee1-1643-4ef8-af33-fde80cb4d987")
 
     def test_get_submission_for_bounty_passes(self):
         uname = os.environ.get('BCUSER')
         pw = os.environ.get('BCPW')
 
-        test = pycrowd.Client(uname, pw)
+        test = bugcrowd.Client(uname, pw)
         r = test.get_submissions_for_bounty("84b71b04-a363-441f-91e0-8519ad3a4f4f")
 
         assert r[0].bounty['uuid'] == "84b71b04-a363-441f-91e0-8519ad3a4f4f"
@@ -35,7 +35,7 @@ class TestSubmissions(object):
     def test_update_submission_priority(self):
         uname = os.environ.get('BCUSER')
         pw = os.environ.get('BCPW')
-        test = pycrowd.Client(uname, pw)
+        test = bugcrowd.Client(uname, pw)
         
         assert test.get_submission("b337bee1-1643-4ef8-af33-fde80cb4d987").priority == None
         test.update_priority_on_submission("b337bee1-1643-4ef8-af33-fde80cb4d987", 4)
@@ -47,10 +47,10 @@ class TestSubmissions(object):
         assert test.get_submission("b337bee1-1643-4ef8-af33-fde80cb4d987").priority == None
 
     def test_update_submission_priority_fails(self):
-        with pytest.raises(pycrowd.ApiException):
+        with pytest.raises(bugcrowd.ApiException):
             uname = "noOne"
             pw = "badPass"
-            test = pycrowd.Client(uname, pw)
+            test = bugcrowd.Client(uname, pw)
 
             test.get_submission("b337bee1-1643-4ef8-af33-fde80cb4d987")
 
@@ -61,7 +61,7 @@ class TestSubmissions(object):
         uname = os.environ.get('BCUSER')
         pw = os.environ.get('BCPW')
 
-        test = pycrowd.Client(uname, pw)
+        test = bugcrowd.Client(uname, pw)
         r = test.get_submissions_for_bounty("84b71b04-a363-441f-91e0-8519ad3a4f4f", assignment='mine')
 
         assert r[1].uuid == "38cdcc94-1da7-49d8-a57d-9d09f4a23004"
@@ -71,7 +71,7 @@ class TestSubmissions(object):
         uname = os.environ.get('BCUSER')
         pw = os.environ.get('BCPW')
 
-        test = pycrowd.Client(uname, pw)
+        test = bugcrowd.Client(uname, pw)
         r = test.get_submissions_for_bounty("84b71b04-a363-441f-91e0-8519ad3a4f4f", assignment='mine', sort='newest')
 
         assert r[0].uuid == "b337bee1-1643-4ef8-af33-fde80cb4d987"
@@ -81,7 +81,7 @@ class TestSubmissions(object):
         uname = os.environ.get('BCUSER')
         pw = os.environ.get('BCPW')
 
-        test = pycrowd.Client(uname, pw)
+        test = bugcrowd.Client(uname, pw)
         r = test.get_comments_for_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab")
 
         assert r.status_code == 200
@@ -90,7 +90,7 @@ class TestSubmissions(object):
         uname = os.environ.get('BCUSER')
         pw = os.environ.get('BCPW')
 
-        test = pycrowd.Client(uname, pw)
+        test = bugcrowd.Client(uname, pw)
         r = test.add_comment_to_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab", "note", "testNote")
 
         assert r.status_code == 201
@@ -103,7 +103,7 @@ class TestSubmissions(object):
         uname = os.environ.get('BCUSER')
         pw = os.environ.get('BCPW')
 
-        test = pycrowd.Client(uname, pw)
+        test = bugcrowd.Client(uname, pw)
 
         r = test.get_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab")
 
