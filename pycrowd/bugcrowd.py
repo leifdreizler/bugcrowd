@@ -30,16 +30,6 @@ class Client(object):
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
         return r
 
-    def create_submission(self, bounty_uuid, title=None, submitted_at=None):
-        payload = {}
-        if title is not None:
-            payload['title'] = title
-        if submitted_at is not None:
-            payload['submitted_at'] = submitted_at
-
-        r = self.post('bounties/' +  bounty_uuid + "/submissions", json=payload)
-        return r
-
     def post(self, path, json=None):
         return requests.post('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
                             headers=self.version_header, json=json)
