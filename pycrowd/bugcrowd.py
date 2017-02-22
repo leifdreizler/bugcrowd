@@ -1,5 +1,5 @@
 import requests
-
+import json
 
 class Client(object):
     def __init__(self, username, password):
@@ -14,8 +14,9 @@ class Client(object):
 
     def get_bounty(self, bounty_id):
         r = self.get('bounties/' + bounty_id)
+        j = json.loads(r.text)
 
-        return r
+        return Bounty(j['bounty'])
 
     def get_submissions_for_bounty(self, bounty_uuid, assignment=None, filter=None, search=None, sort=None):
         payload = {}
@@ -72,8 +73,8 @@ class Client(object):
 
 
 class Bounty(object):
-    def __init__(self):
-        pass
+    def __init__(self, j):
+        self.__dict__ = j
 
 
 class Submission(object):
