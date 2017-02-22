@@ -1,6 +1,7 @@
 import requests
 import os
 
+
 class Bugcrowd(object):
     def __init__(self, username, password):
         self.uname = username
@@ -10,4 +11,8 @@ class Bugcrowd(object):
     def list_bounties(self):
         r = requests.get('https://api.bugcrowd.com/bounties', auth=(self.uname, self.pw), headers=self.version_header)
         return r
-        
+
+    def get_bounty(self, bounty_id):
+        r = requests.get('https://api.bugcrowd.com/bounties/' + bounty_id, auth=(self.uname, self.pw),
+                         headers=self.version_header)
+        return r
