@@ -1,4 +1,5 @@
 # Pycrowd
+[![Build Status](https://travis-ci.org/leifdreizler/pycrowd.svg?branch=master)](https://travis-ci.org/leifdreizler/pycrowd)
 
 Python wrapper for the [Bugcrowd API](https://docs.bugcrowd.com/docs/authentication) started during the Winter 2017 Hackathon.
 
