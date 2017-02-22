@@ -31,6 +31,17 @@ class Client(object):
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
         return r
 
+    def update_submission(self, submission_uuid, title=None, internal_bug_type=None):
+        payload = {}
+        if title is not None:
+            payload['title'] = title
+        if internal_bug_type is not None:
+            payload['internal_bug_type'] = internal_bug_type
+
+        r = self.put('submissions/' + submission_uuid, json=payload)
+
+        return r
+
     def set_priority_on_submission(self, submission_uuid, level):
         r = self.post('submissions/' + submission_uuid + '/priority', json={'priority': {'level': level}})
 

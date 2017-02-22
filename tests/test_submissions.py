@@ -68,3 +68,12 @@ class TestSubmissions(object):
         r = test.update_priority_on_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab", 4)
 
         assert r.status_code == 200
+
+    def test_update_submission(self):
+        uname = os.environ.get('BCUSER')
+        pw = os.environ.get('BCPW')
+
+        test = pycrowd.Client(uname, pw)
+        r = test.update_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab", "New Title 1", "xss")
+
+        assert r.status_code == 200
