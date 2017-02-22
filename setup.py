@@ -1,8 +1,8 @@
 from setuptools import setup
 
 setup(
-    name='pycrowd',
-    packages=['pycrowd'],
+    name='bugcrowd',
+    packages=['bugcrowd'],
     version='0.1',
     description='Python wrapper for the Bugcrowd API',
     url='https://github.com/leifdreizler/pycrowd',
