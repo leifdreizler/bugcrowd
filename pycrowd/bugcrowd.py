@@ -10,7 +10,13 @@ class Client(object):
     def list_bounties(self):
         r = self.get('bounties')
 
-        return r
+        j = json.loads(r.text)
+
+        bounties = []
+        for each in j['bounties']:
+            bounties.append(Bounty(each))
+
+        return bounties
 
     def get_bounty(self, bounty_id):
         r = self.get('bounties/' + bounty_id)
@@ -38,13 +44,11 @@ class Client(object):
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
 
         j = json.loads(r.text)
-        #return j['submissions'][0]
+        
         submissions = []
         for each in j['submissions']:
-            #print(each)
             submissions.append(Submission(each))
 
-        
         return submissions
 
     def update_submission(self, submission_uuid, title=None, internal_bug_type=None, custom_fields=None):
