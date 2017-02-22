@@ -38,14 +38,14 @@ class Client(object):
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
         return r
 
-    def update_submission(self, submission_uuid, title=None, internal_bug_type=None, customFields=None):
+    def update_submission(self, submission_uuid, title=None, internal_bug_type=None, custom_fields=None):
         payload = {}
         if title is not None:
             payload['title'] = title
         if internal_bug_type is not None:
             payload['internal_bug_type'] = internal_bug_type
-        if customFields is not None:
-            payload['custom_fields'] = customFields
+        if custom_fields is not None:
+            payload['custom_fields'] = custom_fields
 
         r = self.put('submissions/' + submission_uuid, json=payload)
 
@@ -68,6 +68,11 @@ class Client(object):
 
     def get_comments_for_submission(self, submission_uuid):
         r = self.get('submissions/' + submission_uuid + '/comments')
+        return r
+
+    def add_comment_to_submission(self, submission_uuid, type, body):
+        r = self.post('submissions/' + submission_uuid + '/comments', json={'comment': {'type': type, 'body': body}})
+
         return r
 
     def get_custom_fields_for_bounty(self, bounty_uuid):
