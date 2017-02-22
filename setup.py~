@@ -10,8 +10,7 @@ setup(
     license='MIT',
     packages=['pycrowd'],
     install_requires=[
-        'requests',
-        'pytest'
+        'requests'
     ],
     zip_safe=False
 )
