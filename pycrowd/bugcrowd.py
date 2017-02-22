@@ -30,6 +30,14 @@ class Client(object):
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
         return r
 
+    def get_comments_for_submission(self, submission_uuid):
+        r = self.get('submissions/' + submission_uuid + '/comments')
+        return r
+
+    def get_custom_fields_for_bounty(self, bounty_uuid):
+        r = self.get('bounties/' + bounty_uuid + '/custom_field_labels')
+        return r
+
     def post(self, path, json=None):
         return requests.post('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
                             headers=self.version_header, json=json)
