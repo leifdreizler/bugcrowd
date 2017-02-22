@@ -14,7 +14,7 @@ class TestSubmissions(object):
 
         assert s.uuid == "b337bee1-1643-4ef8-af33-fde80cb4d987"
 
-#    def test_get_submission_failes(self):
+#    def test_get_submission_fails(self):
         # TODO
 
     def test_get_submission_for_bounty_passes(self):
@@ -53,6 +53,18 @@ class TestSubmissions(object):
 
         assert r.status_code == 200
 
+    def test_add_comment_to_submission(self):
+        uname = os.environ.get('BCUSER')
+        pw = os.environ.get('BCPW')
+
+        test = pycrowd.Client(uname, pw)
+        r = test.add_comment_to_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab", "note", "testNote")
+
+        assert r.status_code == 201
+
+        r = test.add_comment_to_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab", "tester_message", "testerMessage")
+
+        assert r.status_code == 201
 
     def test_delete_priority_on_submission(self):
         uname = os.environ.get('BCUSER')
