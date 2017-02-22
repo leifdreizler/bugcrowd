@@ -15,14 +15,12 @@ class Bugcrowd(object):
                          headers=self.version_header)
         return r
 
-    def get_submissions_for_bounty(self, bounty_uuid, assignment='', filter='', offset=0, search='', sort=''):
+    def get_submissions_for_bounty(self, bounty_uuid, assignment='', filter='', search='', sort=''):
         payload = {}
         if assignment != '':
             payload['assignment'] = assignment
         if filter != '':
             payload['filter'] = filter
-        if offset != 0:
-            payload['offset'] = offset
         if search != '':
             payload['search'] = search
         if sort != '':
