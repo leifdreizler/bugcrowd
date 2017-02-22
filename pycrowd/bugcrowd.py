@@ -64,20 +64,17 @@ class Client(object):
 
         return r
 
-    def set_priority_on_submission(self, submission_uuid, level):
-        r = self.post('submissions/' + submission_uuid + '/priority', json={'priority': {'level': level}})
-
-        return r
-
     def update_priority_on_submission(self, submission_uuid, level):
-        r = self.put('submissions/' + submission_uuid + '/priority', json={'priority': {'level': level}})
+        current_priority = self.get_submission(submission_uuid).priority
+        
+        if current_priority == None: # Set
+            r = self.post('submissions/' + submission_uuid + '/priority', json={'priority': {'level': level}})
+        elif current_priority: # Update
+            r = self.put('submissions/' + submission_uuid + '/priority', json={'priority': {'level': level}})
+        elif level == None: # Delete
+            r = self.delete('submissions/' + submission_uuid + '/priority')
 
-        return r
-
-    def delete_priority_on_submission(self, submission_uuid):
-        r = self.delete('submissions/' + submission_uuid + '/priority')
-
-        return r
+        return level
 
     def get_comments_for_submission(self, submission_uuid):
         r = self.get('submissions/' + submission_uuid + '/comments')
