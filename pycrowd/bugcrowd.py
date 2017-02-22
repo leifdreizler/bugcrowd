@@ -10,6 +10,9 @@ class Client(object):
     def list_bounties(self):
         r = self.get('bounties')
 
+        if r.status_code is not 200:
+            raise ApiException(r.text)
+
         j = json.loads(r.text)
 
         bounties = []
@@ -20,12 +23,20 @@ class Client(object):
 
     def get_bounty(self, bounty_id):
         r = self.get('bounties/' + bounty_id)
+
+        if r.status_code is not 200:
+            raise ApiException(r.text)
+
         j = json.loads(r.text)
 
         return Bounty(j['bounty'])
 
     def get_submission(self, submission_id):
         r = self.get('submissions/' + submission_id)
+
+        if r.status_code is not 200:
+            raise ApiException(r.text)
+
         j = json.loads(r.text)
 
         return Submission(j['submission'])
@@ -42,6 +53,9 @@ class Client(object):
             payload['sort'] = sort
 
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
+
+        if r.status_code is not 200:
+            raise ApiException(r.text)
 
         j = json.loads(r.text)
         
@@ -63,6 +77,9 @@ class Client(object):
             payload['custom_fields'] = custom_fields
 
         r = self.put('submissions/' + submission_uuid, json=payload)
+
+        if r.status_code is not 200:
+            raise ApiException(r.text)
 
         return self.get_submission(submission_uuid)
 
@@ -134,3 +151,7 @@ class Bounty(object):
 class Submission(object):
     def __init__(self, j):
         self.__dict__ = j
+
+class ApiException(Exception):
+    def __init__(self, message):
+        self.message = message

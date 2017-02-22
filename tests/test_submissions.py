@@ -1,10 +1,10 @@
 import os
 
+import pytest
 import pycrowd
-from pprint import pprint
+
 
 class TestSubmissions(object):
-
     def test_get_submission_passes(self):
         uname = os.environ.get('BCUSER')
         pw = os.environ.get('BCPW')
@@ -14,8 +14,13 @@ class TestSubmissions(object):
 
         assert s.uuid == "b337bee1-1643-4ef8-af33-fde80cb4d987"
 
-#    def test_get_submission_fails(self):
-        # TODO
+    def test_get_submission_fails(self):
+        with pytest.raises(pycrowd.ApiException):
+            uname = "noOne"
+            pw = "badPass"
+
+            test = pycrowd.Client(uname, pw)
+            test.get_submission("b337bee1-1643-4ef8-af33-fde80cb4d987")
 
     def test_get_submission_for_bounty_passes(self):
         uname = os.environ.get('BCUSER')
@@ -43,8 +48,8 @@ class TestSubmissions(object):
         test = pycrowd.Client(uname, pw)
         r = test.get_submissions_for_bounty("84b71b04-a363-441f-91e0-8519ad3a4f4f", assignment='mine', sort='newest')
 
-        assert r[0].uuid == "57fb1401-dbf0-4e8d-a640-c0ba83ccd774"
-        assert r[0].caption == "Ongoing Test Bug #2"
+        assert r[0].uuid == "b337bee1-1643-4ef8-af33-fde80cb4d987"
+        assert r[0].caption == "one"
 
     def test_get_comments_for_submission_passes(self):
         uname = os.environ.get('BCUSER')
@@ -105,7 +110,8 @@ class TestSubmissions(object):
 
         assert r.title == "New Title 1"
 
-        r = test.update_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab", "New Title 2", "xss", {'customKey': 'updatedKey'})
+        r = test.update_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab", "New Title 2", "xss",
+                                   {'customKey': 'updatedKey'})
 
         assert r.title == "New Title 2"
 
