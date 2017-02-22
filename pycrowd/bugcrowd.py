@@ -1,5 +1,6 @@
 import requests
 
+
 class Client(object):
     def __init__(self, username, password):
         self.uname = username
@@ -30,6 +31,21 @@ class Client(object):
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
         return r
 
+    def set_priority_on_submission(self, submission_uuid, level):
+        r = self.post('submissions/' + submission_uuid + '/priority', json={'priority': {'level': level}})
+
+        return r
+
+    def update_priority_on_submission(self, submission_uuid, level):
+        r = self.put('submissions/' + submission_uuid + '/priority', json={'priority': {'level': level}})
+
+        return r
+
+    def delete_priority_on_submission(self, submission_uuid):
+        r = self.delete('submissions/' + submission_uuid + '/priority')
+
+        return r
+
     def get_comments_for_submission(self, submission_uuid):
         r = self.get('submissions/' + submission_uuid + '/comments')
         return r
@@ -38,17 +54,27 @@ class Client(object):
         r = self.get('bounties/' + bounty_uuid + '/custom_field_labels')
         return r
 
-    def post(self, path, json=None):
-        return requests.post('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
+    def delete(self, path):
+        return requests.delete('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
+                               headers=self.version_header)
+
+    def put(self, path, json=None):
+        return requests.put('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
                             headers=self.version_header, json=json)
 
+    def post(self, path, json=None):
+        return requests.post('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
+                             headers=self.version_header, json=json)
+
     def get(self, path, params=None):
-        return requests.get('https://api.bugcrowd.com/' + path , auth=(self.uname, self.pw),
-                         headers=self.version_header, params=params)
+        return requests.get('https://api.bugcrowd.com/' + path, auth=(self.uname, self.pw),
+                            headers=self.version_header, params=params)
+
 
 class Bounty(object):
     def __init__(self):
         pass
+
 
 class Submission(object):
     def __init__(self):
