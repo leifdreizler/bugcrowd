@@ -9,7 +9,6 @@ setup(
     author='Leif Dreizler',
     author_email='leifdreizler@gmail.com',
     license='MIT',
-    packages=['pycrowd'],
     install_requires=[
         'requests',
         'pytest'
