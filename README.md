@@ -1,11 +1,6 @@
 # Pycrowd
 [![Build Status](https://travis-ci.org/leifdreizler/pycrowd.svg?branch=master)](https://travis-ci.org/leifdreizler/pycrowd)
 
-Python wrapper for the [Bugcrowd API](https://docs.bugcrowd.com/docs/authentication) started during the Winter 2017 Hackathon.
+Python wrapper for the [Bugcrowd API](https://docs.bugcrowd.com/docs/authentication) by [Leif Dreizler](https://twitter.com/leifdreizler) and [Zach Sperske](https://twitter.com/zsperske). Leif does work at Bugcrowd, but this isn't an official Bugcrowd integration.
 
-### Goals
-1. Write positive and negative test cases
-2. Wrap all documented API functions
-3. Deploy to Pypi
-4. Test Python2 and 3 compatibility
-5. Refine adherance to PEP 8
+Currently contains all functionality except creating a submission. The recent changes to the submission form are going to get added to the API soon and we didn't want to spend time writing code that will soon be deprecated.
