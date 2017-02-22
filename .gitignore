@@ -93,3 +93,6 @@ ENV/
 
 # Temporary Files
 *~
+
+# DS Store
+DS._Store
