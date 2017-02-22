@@ -1,6 +1,8 @@
 import os
 
 import pycrowd
+import pytest
+
 
 class TestBounties(object):
     def test_list_bounties_passes(self):
@@ -12,14 +14,14 @@ class TestBounties(object):
 
         assert len(b) == 3
 
-    # def test_list_bounties_fails(self):
-    #     uname = "nonExistent"
-    #     pw = "wrongPassword"
+    def test_list_bounties_fails(self):
+        with pytest.raises(pycrowd.ApiException):
+            uname = "noOne"
+            pw = "badPass"
 
-    #     test = pycrowd.Client(uname, pw)
-    #     r = test.list_bounties()
-
-    #     assert r.status_code == 401
+            test = pycrowd.Client(uname, pw)
+            test.get_submission("b337bee1-1643-4ef8-af33-fde80cb4d987")
+            r = test.list_bounties()
 
     def test_single_bounty_passes(self):
         uname = os.environ.get('BCUSER')
@@ -49,7 +51,7 @@ class TestBounties(object):
         assert r.status_code == 200
 
     # TODO reenable by fetching field ID after creation then deleting
-    #def test_create_and_delete_custom_field_for_bounty(self):
+    # def test_create_and_delete_custom_field_for_bounty(self):
     #    uname = os.environ.get('BCUSER')
     #    pw = os.environ.get('BCPW')
 

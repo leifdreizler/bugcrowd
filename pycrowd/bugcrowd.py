@@ -10,6 +10,9 @@ class Client(object):
     def list_bounties(self):
         r = self.get('bounties')
 
+        if r.status_code is not 200:
+            raise ApiException(r.text)
+
         j = json.loads(r.text)
 
         bounties = []
@@ -20,12 +23,20 @@ class Client(object):
 
     def get_bounty(self, bounty_id):
         r = self.get('bounties/' + bounty_id)
+
+        if r.status_code is not 200:
+            raise ApiException(r.text)
+
         j = json.loads(r.text)
 
         return Bounty(j['bounty'])
 
     def get_submission(self, submission_id):
         r = self.get('submissions/' + submission_id)
+
+        if r.status_code is not 200:
+            raise ApiException(r.text)
+
         j = json.loads(r.text)
 
         return Submission(j['submission'])
@@ -43,6 +54,9 @@ class Client(object):
 
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
 
+        if r.status_code is not 200:
+            raise ApiException(r.text)
+
         j = json.loads(r.text)
         
         submissions = []
@@ -50,6 +64,8 @@ class Client(object):
             submissions.append(Submission(each))
 
         return submissions
+
+    # TODO Add code for create submission once API is correct
 
     def update_submission(self, submission_uuid, title=None, internal_bug_type=None, custom_fields=None):
         payload = {}
@@ -62,7 +78,10 @@ class Client(object):
 
         r = self.put('submissions/' + submission_uuid, json=payload)
 
-        return r
+        if r.status_code is not 200:
+            raise ApiException(r.text)
+
+        return self.get_submission(submission_uuid)
 
     def update_priority_on_submission(self, submission_uuid, level):
         current_priority = self.get_submission(submission_uuid).priority
@@ -82,7 +101,6 @@ class Client(object):
 
     def add_comment_to_submission(self, submission_uuid, type, body):
         r = self.post('submissions/' + submission_uuid + '/comments', json={'comment': {'type': type, 'body': body}})
-
         return r
 
     def get_custom_fields_for_bounty(self, bounty_uuid):
@@ -131,3 +149,7 @@ class Bounty(object):
 class Submission(object):
     def __init__(self, j):
         self.__dict__ = j
+
+class ApiException(Exception):
+    def __init__(self, message):
+        self.message = message
