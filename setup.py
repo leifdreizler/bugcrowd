@@ -11,7 +11,8 @@ setup(
     license='MIT',
     install_requires=[
         'requests',
-        'pytest'
+        'pytest',
+        'pprint'
     ],
     download_url = 'https://github.com/leifdreizler/pycrowd/archive/0.1.tar.gz',
     keywords = ['bugcrowd'],

@@ -1,5 +1,6 @@
 import requests
 import json
+import pprint
 
 class Client(object):
     def __init__(self, username, password):
@@ -145,10 +146,16 @@ class Bounty(object):
     def __init__(self, j):
         self.__dict__ = j
 
+    def __repr__(self):
+    	return pprint.pformat(vars(self))
+
 
 class Submission(object):
     def __init__(self, j):
         self.__dict__ = j
+
+    def __repr__(self):
+    	return pprint.pformat(vars(self))
 
 class ApiException(Exception):
     def __init__(self, message):
