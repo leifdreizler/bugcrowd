@@ -36,7 +36,16 @@ class Client(object):
             payload['sort'] = sort
 
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
-        return r
+
+        j = json.loads(r.text)
+        #return j['submissions'][0]
+        submissions = []
+        for each in j['submissions']:
+            #print(each)
+            submissions.append(Submission(each))
+
+        
+        return submissions
 
     def update_submission(self, submission_uuid, title=None, internal_bug_type=None, customFields=None):
         payload = {}
