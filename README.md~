@@ -7,4 +7,3 @@ Python wrapper for the [Bugcrowd API](https://docs.bugcrowd.com/docs/authenticat
 2. Wrap all documented API functions
 3. Deploy to Pypi
 4. Test Python2 and 3 compatibility
-5. Refine adherance to PEP 8
