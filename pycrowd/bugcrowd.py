@@ -1,6 +1,6 @@
 import requests
 
-class Bugcrowd(object):
+class Client(object):
     def __init__(self, username, password):
         self.uname = username
         self.pw = password
@@ -29,3 +29,11 @@ class Bugcrowd(object):
         r = requests.get('https://api.bugcrowd.com/bounties/' + bounty_uuid + '/submissions', auth=(self.uname, self.pw),
                          headers=self.version_header, params=payload)
         return r
+
+class Bounty(object):
+    def __init__(self):
+        pass
+
+class Submission(object):
+    def __init__(self):
+        pass
