@@ -5,6 +5,18 @@ import pycrowd
 
 class TestSubmissions(object):
 
+    def test_get_submission_passes(self):
+        uname = os.environ.get('BCUSER')
+        pw = os.environ.get('BCPW')
+
+        test = pycrowd.Client(uname, pw)
+        s = test.get_submission("b337bee1-1643-4ef8-af33-fde80cb4d987")
+
+        assert s.uuid == "b337bee1-1643-4ef8-af33-fde80cb4d987"
+
+#    def test_get_submission_failes(self):
+        # TODO
+
     def test_get_submission_for_bounty_passes(self):
         uname = os.environ.get('BCUSER')
         pw = os.environ.get('BCPW')

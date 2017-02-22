@@ -18,6 +18,12 @@ class Client(object):
 
         return Bounty(j['bounty'])
 
+    def get_submission(self, submission_id):
+        r = self.get('submissions/' + submission_id)
+        j = json.loads(r.text)
+
+        return Submission(j['submission'])
+
     def get_submissions_for_bounty(self, bounty_uuid, assignment=None, filter=None, search=None, sort=None):
         payload = {}
         if assignment is not None:
@@ -108,5 +114,5 @@ class Bounty(object):
 
 
 class Submission(object):
-    def __init__(self):
-        pass
+    def __init__(self, j):
+        self.__dict__ = j
