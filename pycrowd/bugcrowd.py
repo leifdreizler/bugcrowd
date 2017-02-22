@@ -8,11 +8,6 @@ class Bugcrowd(object):
         self.version_header = {"Accept": "application/vnd.bugcrowd.v2+json"}
 
     def list_bounties(self):
-        r = requests.get('https://api.bugcrowd.com/bounties', auth=(uname, pw), headers=self.version_header)
-        print(r.text)
+        r = requests.get('https://api.bugcrowd.com/bounties', auth=(self.uname, self.pw), headers=self.version_header)
+        return r
         
-uname = os.environ.get('BCUSER')
-pw = os.environ.get('BCPW')
-
-test = Bugcrowd(uname, pw)
-test.list_bounties()
