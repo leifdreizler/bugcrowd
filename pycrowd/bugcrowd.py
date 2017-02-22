@@ -47,6 +47,8 @@ class Client(object):
         
         return submissions
 
+    # TODO Add code for create submission once API is correct
+
     def update_submission(self, submission_uuid, title=None, internal_bug_type=None, custom_fields=None):
         payload = {}
         if title is not None:
@@ -58,7 +60,7 @@ class Client(object):
 
         r = self.put('submissions/' + submission_uuid, json=payload)
 
-        return r
+        return self.get_submission(submission_uuid)
 
     def set_priority_on_submission(self, submission_uuid, level):
         r = self.post('submissions/' + submission_uuid + '/priority', json={'priority': {'level': level}})
@@ -72,7 +74,6 @@ class Client(object):
 
     def delete_priority_on_submission(self, submission_uuid):
         r = self.delete('submissions/' + submission_uuid + '/priority')
-
         return r
 
     def get_comments_for_submission(self, submission_uuid):
@@ -81,7 +82,6 @@ class Client(object):
 
     def add_comment_to_submission(self, submission_uuid, type, body):
         r = self.post('submissions/' + submission_uuid + '/comments', json={'comment': {'type': type, 'body': body}})
-
         return r
 
     def get_custom_fields_for_bounty(self, bounty_uuid):
