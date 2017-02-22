@@ -11,5 +11,6 @@ install: "pip install -r requirements.txt"
 
 script: python -m pytest
 
-after_sucess: 
-  - CODECLIMATE_REPO_TOKEN=6d64c71a18ddfa36d1c8e8dd05e442316bf35b730a3973bdded8f3e9f6adef20 codeclimate-test-reporter
+addons:
+    code_climate:
+        repo_token: 6d64c71a18ddfa36d1c8e8dd05e442316bf35b730a3973bdded8f3e9f6adef20
