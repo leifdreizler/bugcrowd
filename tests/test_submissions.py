@@ -64,7 +64,7 @@ class TestSubmissions(object):
         test = bugcrowd.Client(uname, pw)
         r = test.get_submissions_for_bounty("84b71b04-a363-441f-91e0-8519ad3a4f4f", assignment='mine')
 
-        assert r[1].uuid == "38cdcc94-1da7-49d8-a57d-9d09f4a23004"
+        assert r[1].uuid == "9fdca5e5-633f-471d-b0df-c69abb0d35bb"
         assert r[1].caption == "Ongoing Test Bug #1"
 
     def test_get_submission_for_bounty_with_assignment_and_sort(self):
