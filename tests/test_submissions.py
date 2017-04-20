@@ -74,7 +74,7 @@ class TestSubmissions(object):
         test = bugcrowd.Client(uname, pw)
         r = test.get_submissions_for_bounty("84b71b04-a363-441f-91e0-8519ad3a4f4f", assignment='mine', sort='newest')
 
-        assert r[0].uuid == "b337bee1-1643-4ef8-af33-fde80cb4d987"
+        assert r[0].uuid == "9fdca5e5-633f-471d-b0df-c69abb0d35bb"
         assert r[0].caption == "one"
 
     def test_get_comments_for_submission_passes(self):
