@@ -75,7 +75,7 @@ class TestSubmissions(object):
         r = test.get_submissions_for_bounty("84b71b04-a363-441f-91e0-8519ad3a4f4f", assignment='mine', sort='newest')
 
         assert r[0].uuid == "9fdca5e5-633f-471d-b0df-c69abb0d35bb"
-        assert r[0].caption == "one"
+        assert r[0].caption == "Assigned_Zach, State_Triage"
 
     def test_get_comments_for_submission_passes(self):
         uname = os.environ.get('BCUSER')
