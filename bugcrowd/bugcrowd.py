@@ -1,6 +1,5 @@
 import requests
 import json
-import pprint
 
 class Client(object):
     def __init__(self, username, password):
