@@ -12,7 +12,6 @@ setup(
     install_requires=[
         'requests',
         'pytest',
-        'pprint'
     ],
     download_url = 'https://github.com/leifdreizler/bugcrowd/archive/0.1.tar.gz',
     keywords = ['bugcrowd'],
