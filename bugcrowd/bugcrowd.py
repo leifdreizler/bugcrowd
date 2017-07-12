@@ -6,7 +6,7 @@ class Client(object):
     def __init__(self, username, password):
         self.uname = username
         self.pw = password
-        self.version_header = {"Accept": "application/vnd.bugcrowd.v2+json"}
+        self.version_header = {"Accept": "application/vnd.bugcrowd.v3+json"}
 
     def list_bounties(self):
         r = self.get('bounties')
@@ -32,14 +32,11 @@ class Client(object):
 
     def get_submissions_for_bounty(self, bounty_uuid, assignment=None, filter=None, search=None, sort=None):
         payload = {}
-        if assignment is not None:
-            payload['assignment'] = assignment
-        if filter is not None:
-            payload['filter'] = filter
-        if search is not None:
-            payload['search'] = search
-        if sort is not None:
-            payload['sort'] = sort
+
+        payload['assignment'] = assignment if assignment
+        payload['filter'] = filter if filter
+        payload['search'] = search if search
+        payload['sort'] = sort if sort
 
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
         j = json.loads(r.text)
@@ -52,14 +49,12 @@ class Client(object):
 
     # TODO Add code for create submission once API is correct
 
-    def update_submission(self, submission_uuid, title=None, internal_bug_type=None, custom_fields=None):
+    def update_submission(self, submission_uuid, title=None, vrt_id=None, custom_fields=None, bug_url=None):
         payload = {}
-        if title is not None:
-            payload['title'] = title
-        if internal_bug_type is not None:
-            payload['internal_bug_type'] = internal_bug_type
-        if custom_fields is not None:
-            payload['custom_fields'] = custom_fields
+        
+        payload['title'] = title if title 
+        payload['internal_bug_type'] = vrt_id if vrt_id
+        payload['custom_fields'] = custom_fields if custom_fields
 
         self.put('submissions/' + submission_uuid, json=payload)
 
@@ -77,9 +72,46 @@ class Client(object):
 
         return level
 
+    def transition_submission(self, submission_uuid, new_state, duplicate_of_uuid=None):
+        payload = {}
+        payload['substate'] = new_state
+        if new_state == 'duplicate':
+            payload['duplicate_of'] = duplicate_of_uuid
+
+        self.post('submissions/' + submission_uuid + '/transition', json=payload)
+
+        return self.get_submission(submission_uuid)
+
+    def set_reward(self, submission_uuid, reward):
+        payload = {}
+        payload['amount'] = reward
+
+        self.post('submissions/' + submission_uuid + '/rewards', json=payload)
+
+        return self.get_submission(submission_uuid)
+
+    def create_submission(self, title, submitted_at, bug_url=None, comment=None, description_markdown=None, \
+        extra_info_markdown=None, http_request=None, priority=None, replication_steps_markdown=None, \
+        researcher_email=None, substate=None, vrt_id=None):
+        
+        payload = {}
+        payload['title'] = title
+        payload['submitted_at'] = submitted_at
+        payload['bug_url'] = bug_url if bug_url
+        payload['comment'] = comment if comment
+        payload['description_markdown'] = description_markdown if description_markdown
+        payload['extra_info_markdown'] = extra_info_markdown if extra_info_markdown
+        payload['http_request'] = http_request if http_request
+        payload['priority'] = priority if priority
+        payload['replication_steps_markdown'] = replication_steps_markdown if replication_steps_markdown
+        payload['researcher_email'] = researcher_email if researcher_email
+        payload['substate'] = substate if substate
+        payload['vrt_id'] = vrt_id if vrt_id
+
     def get_comments_for_submission(self, submission_uuid):
         r = self.get('submissions/' + submission_uuid + '/comments')
-        return r
+        payload = {}
+
 
     def add_comment_to_submission(self, submission_uuid, type, body):
         r = self.post('submissions/' + submission_uuid + '/comments', json={'comment': {'type': type, 'body': body}})

@@ -64,8 +64,8 @@ class TestSubmissions(object):
         test = bugcrowd.Client(uname, pw)
         r = test.get_submissions_for_bounty("84b71b04-a363-441f-91e0-8519ad3a4f4f", assignment='mine')
 
-        assert r[1].uuid == "38cdcc94-1da7-49d8-a57d-9d09f4a23004"
-        assert r[1].caption == "Ongoing Test Bug #1"
+        assert r[1].uuid == "9fdca5e5-633f-471d-b0df-c69abb0d35bb"
+        assert r[1].caption == "Assigned_Zach, State_Triage"
 
     def test_get_submission_for_bounty_with_assignment_and_sort(self):
         uname = os.environ.get('BCUSER')
@@ -74,8 +74,8 @@ class TestSubmissions(object):
         test = bugcrowd.Client(uname, pw)
         r = test.get_submissions_for_bounty("84b71b04-a363-441f-91e0-8519ad3a4f4f", assignment='mine', sort='newest')
 
-        assert r[0].uuid == "b337bee1-1643-4ef8-af33-fde80cb4d987"
-        assert r[0].caption == "one"
+        assert r[0].uuid == "9fdca5e5-633f-471d-b0df-c69abb0d35bb"
+        assert r[0].caption == "Assigned_Zach, State_Triage"
 
     def test_get_comments_for_submission_passes(self):
         uname = os.environ.get('BCUSER')
@@ -109,12 +109,12 @@ class TestSubmissions(object):
 
         assert r.title == "New Title 1"
 
-        r = test.update_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab", "New Title 2", "xss",
+        r = test.update_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab", "New Title 2", "cross_site_scripting_xss",
                                    {'customKey': 'updatedKey'})
 
         assert r.title == "New Title 2"
 
-        r = test.update_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab", "New Title 1", "xss",
+        r = test.update_submission("eea7936e-caf5-40ef-a77e-3daf22a0e0ab", "New Title 1", "cross_site_scripting_xss",
                                    {'customKey': 'updatedKey'})
 
         assert r.title == "New Title 1"
