@@ -33,10 +33,17 @@ class Client(object):
     def get_submissions_for_bounty(self, bounty_uuid, assignment=None, filter=None, search=None, sort=None):
         payload = {}
 
-        payload['assignment'] = assignment if assignment
-        payload['filter'] = filter if filter
-        payload['search'] = search if search
-        payload['sort'] = sort if sort
+        if assignment:
+            payload['assignment'] = assignment
+
+        if filter:      
+            payload['filter'] = filter 
+
+        if search:
+            payload['search'] = search 
+
+        if sort:
+            payload['sort'] = sort 
 
         r = self.get('bounties/' + bounty_uuid + '/submissions', params=payload)
         j = json.loads(r.text)
@@ -52,9 +59,14 @@ class Client(object):
     def update_submission(self, submission_uuid, title=None, vrt_id=None, custom_fields=None, bug_url=None):
         payload = {}
         
-        payload['title'] = title if title 
-        payload['internal_bug_type'] = vrt_id if vrt_id
-        payload['custom_fields'] = custom_fields if custom_fields
+        if title:
+            payload['title'] = title 
+    
+        if vrt_id:
+            payload['vrt_id '] = vrt_id 
+    
+        if custom_fields:    
+            payload['custom_fields'] = custom_fields 
 
         self.put('submissions/' + submission_uuid, json=payload)
 
@@ -97,20 +109,40 @@ class Client(object):
         payload = {}
         payload['title'] = title
         payload['submitted_at'] = submitted_at
-        payload['bug_url'] = bug_url if bug_url
-        payload['comment'] = comment if comment
-        payload['description_markdown'] = description_markdown if description_markdown
-        payload['extra_info_markdown'] = extra_info_markdown if extra_info_markdown
-        payload['http_request'] = http_request if http_request
-        payload['priority'] = priority if priority
-        payload['replication_steps_markdown'] = replication_steps_markdown if replication_steps_markdown
-        payload['researcher_email'] = researcher_email if researcher_email
-        payload['substate'] = substate if substate
-        payload['vrt_id'] = vrt_id if vrt_id
+
+        if bug_url:
+            payload['bug_url'] = bug_url 
+
+        if comment:
+            payload['comment'] = comment 
+        
+        if description_markdown:
+            payload['description_markdown'] = description_markdown 
+    
+        if extra_info_markdown:    
+            payload['extra_info_markdown'] = extra_info_markdown 
+    
+        if http_request:
+            payload['http_request'] = http_request 
+    
+        if priority:
+            payload['priority'] = priority 
+    
+        if replication_steps_markdown:
+            payload['replication_steps_markdown'] = replication_steps_markdown 
+    
+        if researcher_email:
+            payload['researcher_email'] = researcher_email 
+    
+        if substate:
+            payload['substate'] = substate 
+    
+        if vrt_id:
+            payload['vrt_id'] = vrt_id 
 
     def get_comments_for_submission(self, submission_uuid):
         r = self.get('submissions/' + submission_uuid + '/comments')
-        payload = {}
+        return r
 
 
     def add_comment_to_submission(self, submission_uuid, type, body):
